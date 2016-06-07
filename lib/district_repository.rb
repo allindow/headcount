@@ -7,47 +7,30 @@ require 'csv'
 
 
 class DistrictRepository
-    #include modulename
-  #holds District instances (District.new) so need to pull in district data from the data files
+
   def initialize
-  
+    @districts = districts
   end
 
-  def load_data
-    #returns a hash of :enrollment and :kindergarten(which is tied to the string of csv file)
-
+  def load_data(hash with enrollment and kindergarten )
+    read file, (holds data about districts), parse through it (read line by line, each line represents diff district)
+      info = "Adams County, 874547, 2015, 15"
+    store it somehow...
+      store in a class (District)
+      District.new({name: info.split(",")[0]})
+    stores those district objects in a new structure @districts
   end
 
   def find_by_name
-    #finds a district by name and returns the District object(?)
-    #returns either nil or an instance of District having done a case insensitive search
+    districts.find do |name|
+      district.name == name
+    end
   end
 
-  def find_all_matching
-    # returns either [] or one or more matches which contain the supplied name fragment, case insensitive
-    #could use method #contains?
+  def find_all_matching(fragment)
+    @districts.select do |district|
+      district.name.downcase.include?(fragment.downcase)
+    end
   end
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# for reference, here are the enrollment files:
-#Dropout rate information
-#Kindergarten enrollment rates
-#Online enrollment rates
-#Overall enrollment rates
-#Enrollment rates by race and ethnicity
-#High school graduation rates by race and ethnicity
-#Special education enrollment rates'
