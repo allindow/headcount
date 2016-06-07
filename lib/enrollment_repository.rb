@@ -1,6 +1,7 @@
 require 'csv'
 require 'pp'
 require './lib/enrollment'
+require 'pry'
 
 class EnrollmentRepository
 
@@ -10,14 +11,16 @@ class EnrollmentRepository
 
 
   def find_by_name(name)
-    @enrollments.find {|data_set| data_set.name.upcase == name.upcase}
+    selection = @enrollments.select do |data_set|
+      data_set.name.upcase == name.upcase
+    end
+    selection.empty? ? nil : selection
   end
 
   def load_data(file_tree)
     filepath = file_tree.dig(:enrollment, :kindergarten)
     enrollment_data = CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
-       Enrollment.new({ :name => row[:location], row[:timeframe].to_i => row[:data].to_f })       
-      binding.pry
+       @enrollments << Enrollment.new({ :name => row[:location], row[:timeframe].to_i => row[:data].to_f })
       end
     end
   end
