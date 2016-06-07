@@ -5,20 +5,15 @@ require 'csv'
 ###QUESTIONS###
 #1) should we focus just on enrollment csv files or look at all of them?  (statewide testing would have the same data probably, and socioeconomic status seems like it'd be less reliable)
 
-  #contents = CSV.open 'which file we're using.csv', headers: true, header_converters: :symbol
 
 class District
-  def initialize(name)
-    #uses symbol :name
+  attr_reader   :names
+  def initialize(names = {})
+     @names = names
   end
-#Location,TimeFrame,DataFormat,Data
-  def read_files
-      contents.each do |row|
-      index = row[0]
-      name = row[:location]
-      zipcode = clean_zipcode(row[:zipcode])
+
   def name
-    #name.upcase - returns the upcased string name of the district
+    names[:name].upcase
   end
 
 end
