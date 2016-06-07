@@ -11,7 +11,7 @@ class District
   def initialize(name)
     #uses symbol :name
   end
-Location,TimeFrame,DataFormat,Data
+#Location,TimeFrame,DataFormat,Data
   def read_files
       contents.each do |row|
       index = row[0]
