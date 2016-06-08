@@ -15,7 +15,7 @@ class DistrictRepositoryTest < Minitest::Test
         }
       })
     district = dr.find_by_name("ACADEMY 20")
-    assert_equal "ACADEMY 20" , district.name
+    assert_equal "ACADEMY 20", district.name
   end
 
   def test_find_by_name
@@ -42,5 +42,4 @@ class DistrictRepositoryTest < Minitest::Test
     no_result = dr.find_all_matching ("hot dog school")
     assert_equal [], no_result
   end
-
 end
