@@ -1,7 +1,8 @@
 require 'csv'
 require 'pry'
-require './lib/district'
-require './lib/csv_parser'
+require_relative 'district'
+require_relative 'csv_parser'
+
 
 class DistrictRepository
     include CSVParser
