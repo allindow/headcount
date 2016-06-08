@@ -1,4 +1,3 @@
-require 'pry'
 
 class Enrollment
   def initialize(attributes)
