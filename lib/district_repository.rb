@@ -1,25 +1,28 @@
 require 'csv'
 require 'pry'
 require_relative 'district'
+require_relative 'csv_parser'
+
 
 class DistrictRepository
+    include CSVParser
 
   def initialize(districts = [])
     @districts = districts
   end
 
   def load_data(file_tree)
-    filepath = file_tree.dig(:enrollment, :kindergarten)
-    district_data = CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
-       @districts << District.new({ :name => row[:location]})
-     end
-  end
+    district_names = district_repo_parser(file_tree)
+    district_names.each do |name|
+     @districts << District.new(name)
+   end
+ end
 
   def find_by_name(name)
     selection = @districts.select do |district_info|
       district_info.name.upcase == name.upcase
     end
-    selection.empty? ? nil : selection
+    selection.empty? ? nil : selection[0]
   end
 
   def find_all_matching(fragment)

@@ -13,7 +13,7 @@ class EnrollmentRepository
     selection = @enrollments.select do |data_set|
       data_set.name.upcase == name.upcase
     end
-    selection.empty? ? nil : selection
+    selection.empty? ? nil : selection[0]
   end
 
   def load_data(file_tree)
