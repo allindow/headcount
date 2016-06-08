@@ -15,12 +15,8 @@ module CSVParser
     end.uniq
   end
 
-  def header_set(filepath)
-    CSV.open(filepath, headers: true, header_converters: :symbol)
-  end
-
-  def parsed_data(data)
-    data.map do |row|
+  def parsed_data(filepath)
+    CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
       { name: row[:location], row[:timeframe].to_i => row[:data].to_f}
     end
   end
@@ -41,8 +37,7 @@ module CSVParser
 
   def enrollment_repo_parser(file_tree)
     filepath = file_tree.dig(:enrollment, :kindergarten)
-    data = header_set(filepath)
-    all_parsed_data = parsed_data(data)
+    all_parsed_data = parsed_data(filepath)
     enrollment_by_year = group_names(all_parsed_data)
     enrollment_data = year_merge(enrollment_by_year)
   end
