@@ -16,7 +16,7 @@ def test_that_load_districts
   skip
   file_tree = {
     :enrollment => {
-      :kindergarten => "./data/Kindergartners in full-day program.csv"
+      :kindergarten => "./test/test_data/test_kinder_full_day.csv"
       }
     }
     assert_equal "", district_repo_parser(file_tree)
@@ -25,7 +25,7 @@ def test_that_load_districts
   def test_that_loads_enrollment_names
     file_tree = {
       :enrollment => {
-        :kindergarten => "./data/Kindergartners in full-day program.csv"
+        :kindergarten => "./test/test_data/test_kinder_full_day.csv"
         }
       }
     assert_equal "", enrollment_repo_parser(file_tree)
