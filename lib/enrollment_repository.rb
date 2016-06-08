@@ -19,6 +19,7 @@ class EnrollmentRepository
   def load_data(file_tree)
     enrollment_names = enrollment_repo_parser(file_tree)
     enrollment_names.each do |name|
+      require "pry"; binding.pry
     @enrollments << Enrollment.new(name)
     end
   end

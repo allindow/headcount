@@ -13,6 +13,7 @@ class CSVParserTest < Minitest::Test
   include CSVParser
 
 def test_that_load_districts
+  skip
   file_tree = {
     :enrollment => {
       :kindergarten => "./data/Kindergartners in full-day program.csv"
