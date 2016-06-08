@@ -18,5 +18,8 @@ def test_that_load_districts
     }
     assert_equal "", district_repo_parser(file_tree)
   end
+  #need to have better tests for this
+  #edge cases to test:
+  #test that it only returns one instance of the district name
 
 end

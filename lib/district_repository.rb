@@ -21,7 +21,7 @@ class DistrictRepository
     selection = @districts.select do |district_info|
       district_info.name.upcase == name.upcase
     end
-    selection.empty? ? nil : selection
+    selection.empty? ? nil : selection[0]
   end
 
   def find_all_matching(fragment)
