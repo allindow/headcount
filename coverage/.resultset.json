@@ -56,7 +56,6 @@
       "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/csv_parser.rb": [
         1,
         null,
-        null,
         1,
         1,
         1,
@@ -66,14 +65,14 @@
         null,
         null,
         1,
-        0,
+        1,
         null,
-        0,
-        0,
+        8,
+        1,
         null,
         null,
         1,
-        1,
+        0,
         null,
         null,
         1,
@@ -98,16 +97,10 @@
         null,
         1,
         1,
+        null,
         1,
         1,
         1,
-        1,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
         null,
         null,
         null
@@ -221,6 +214,6 @@
         null
       ]
     },
-    "timestamp": 1465409593
+    "timestamp": 1465412264
   }
 }
