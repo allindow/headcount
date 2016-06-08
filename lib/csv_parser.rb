@@ -25,11 +25,18 @@ module CSVParser
      end
      enrollment_data = {}
      num = 0
+     final = []
      all_data.map do |set|
+       if all_data[num][:name].upcase == all_data[num+1][:name].upcase
       enrollment_data = enrollment_data.deep_merge(all_data[num].deep_merge(all_data[num+1]))
       num += 1
-      ####this works until it gets to the next name, then it resets the name value to the next name so need to figure out how to tell it to stop and create a new hash when it gets to different name
+    elsif all_data[num][:name].upcase != all_data[num+1][:name].upcase
+        enrollment_data = enrollment_data.deep_merge(all_data[num].deep_merge(all_data[num+1]))
+        final << enrollment_data
+        enrollment_data = {}
+        num += 1
     end
+###   this method mosly works but as some point it is returning nil...need to use test_data to narrow down the problem.
    end
 
   end
