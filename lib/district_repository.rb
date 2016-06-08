@@ -1,6 +1,6 @@
 require 'csv'
 require 'pry'
-require './lib/district'
+require_relative 'district'
 
 class DistrictRepository
 

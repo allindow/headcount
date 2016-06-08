@@ -1,6 +1,5 @@
 require 'csv'
-require 'pp'
-require './lib/enrollment'
+require_relative 'enrollment'
 require 'pry'
 
 class EnrollmentRepository
