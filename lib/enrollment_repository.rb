@@ -4,11 +4,11 @@ require './lib/enrollment'
 require 'pry'
 
 class EnrollmentRepository
+  include CSVParser
 
   def initialize(enrollments = [])
     @enrollments = enrollments
   end
-
 
   def find_by_name(name)
     selection = @enrollments.select do |data_set|
@@ -18,12 +18,12 @@ class EnrollmentRepository
   end
 
   def load_data(file_tree)
-    filepath = file_tree.dig(:enrollment, :kindergarten)
-    enrollment_data = CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
-       @enrollments << Enrollment.new({ :name => row[:location], row[:timeframe].to_i => row[:data].to_f })
-      end
+    enrollment_names = enrollment_repo_parser(file_tree)
+    enrollment_names.each do |name|
+    @enrollments << Enrollment.new(name)
     end
   end
+end
 
 
 
