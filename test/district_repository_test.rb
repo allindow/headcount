@@ -4,6 +4,8 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/district_repository'
 require './lib/district'
+require 'rake/testtask'
+
 
 class DistrictRepositoryTest < Minitest::Test
 

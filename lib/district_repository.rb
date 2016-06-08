@@ -1,5 +1,4 @@
 require 'csv'
-require 'pry'
 require_relative 'district'
 require_relative 'csv_parser'
 

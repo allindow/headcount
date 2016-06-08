@@ -3,6 +3,8 @@ SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/district'
+require 'rake/testtask'
+
 
 class DistrictTest < Minitest::Test
 

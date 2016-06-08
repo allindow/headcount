@@ -1,9 +1,10 @@
-
 require 'simplecov'
 SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/enrollment'
+require 'rake/testtask'
+
 
 
 class EnrollmentTest < Minitest::Test

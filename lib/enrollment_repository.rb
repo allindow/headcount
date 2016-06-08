@@ -1,6 +1,6 @@
 require 'csv'
 require_relative 'enrollment'
-require 'pry'
+require_relative 'csv_parser'
 
 class EnrollmentRepository
   include CSVParser
@@ -19,7 +19,6 @@ class EnrollmentRepository
   def load_data(file_tree)
     enrollment_names = enrollment_repo_parser(file_tree)
     enrollment_names.each do |name|
-      require "pry"; binding.pry
     @enrollments << Enrollment.new(name)
     end
   end
