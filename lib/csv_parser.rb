@@ -13,7 +13,7 @@ module CSVParser
     CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
       { :name => row[:location].upcase}
     end.uniq
-  end
+end
 
   def parsed_data(filepath)
     CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
