@@ -6,8 +6,6 @@ require './lib/enrollment'
 require 'rake/testtask'
 require './lib/helper'
 
-
-
 class EnrollmentTest < Minitest::Test
 
   def test_find_name_of_enrollment_object
@@ -39,7 +37,6 @@ class EnrollmentTest < Minitest::Test
     e = Enrollment.new({})
     assert_equal 1.23, e.truncate_float(1.23)
   end
-
 
 
 end

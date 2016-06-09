@@ -9,6 +9,10 @@ attr_reader :attributes
     @attributes = attributes
   end
 
+  def name
+    @attributes[:name]
+  end
+
   def kindergarten_participation_by_year
       @attributes[:kindergarten_participation].reduce({}) do |result, pair|
       result.merge({pair.first => truncate_float(pair.last)})
@@ -19,10 +23,5 @@ attr_reader :attributes
     kindergarten_participation_by_year[year]
   end
 
-  def name
-    @attributes[:name]
-  end
 
-  def kindergarten_participation_comparison(other_enrollment)
-  end
 end
