@@ -27,8 +27,6 @@ attr_reader :districts
    end
  end
 
-
-
   def find_by_name(name)
     selection = @districts.select do |district_info|
       district_info.name.upcase == name.upcase

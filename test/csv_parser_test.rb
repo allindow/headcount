@@ -32,6 +32,13 @@ def test_that_load_districts
       assert_equal 5, result.count
   end
 
+  def test_group_names
+    input = [{:name => "hi"}, {:name => "lol"}, {:name => "hi"}]
+    output = {"HI"=>[{:name=>"hi"}, {:name=>"hi"}], "LOL"=>[{:name=>"lol"}]}
+
+    assert_equal output, group_names(input)
+  end
+
   def test_that_loads_enrollment_names
     file_tree = {
       :enrollment => {
