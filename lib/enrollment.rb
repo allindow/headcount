@@ -1,5 +1,8 @@
+require_relative 'helper'
 
 class Enrollment
+  include Helper
+
 attr_reader :attributes
 
   def initialize(attributes)
@@ -14,11 +17,6 @@ attr_reader :attributes
 
   def kindergarten_participation_in_year(year)
     kindergarten_participation_by_year[year]
-  end
-
-  def truncate_float(float)
-    #might need to live in a module later on
-    (float * 1000).floor / 1000.to_f
   end
 
   def name

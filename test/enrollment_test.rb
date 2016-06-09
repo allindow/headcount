@@ -4,6 +4,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/enrollment'
 require 'rake/testtask'
+require './lib/helper'
 
 
 
