@@ -4,6 +4,7 @@ require_relative 'csv_parser'
 
 class EnrollmentRepository
   include CSVParser
+  attr_reader :enrollments
 
   def initialize(enrollments = [])
     @enrollments = enrollments
@@ -11,8 +12,12 @@ class EnrollmentRepository
 
   def find_by_name(name)
     selection = @enrollments.select do |data_set|
+      if name.is_a? Hash
+      data_set.name.upcase == name[:name].upcase
+    else
       data_set.name.upcase == name.upcase
     end
+  end
     selection.empty? ? nil : selection[0]
   end
 

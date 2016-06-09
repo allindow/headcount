@@ -1,14 +1,13 @@
 require 'csv'
 
 class District
-  attr_reader   :names
+  attr_reader   :name
+  attr_accessor :enrollment
 
-  def initialize(names)
-     @names = names
-  end
 
-  def name
-    names[:name].upcase
+  def initialize(name)
+     @name = name[:name].upcase
+     @enrollment = enrollment
   end
 
 end
