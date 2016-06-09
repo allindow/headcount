@@ -27,19 +27,42 @@ end
     end
   end
 
-  def year_merge(enrollment_by_year)
+  def year_merge(grade_level, enrollment_by_year)
     enrollment_by_year.map do |name, years|
       year_data = years.reduce({}, :merge)
       year_data.delete(:name)
-      {:name => name, :kindergarten_participation => year_data }
+      {:name => name, grade_level => year_data }
+    end
+  end
+
+  def name_sort(all_data)
+    all_data.group_by do |hash|
+      hash[:name]
+    end
+  end
+
+  def combined_enrollment_by_year(all_data)
+    sorted_by_name = name_sort(all_data)
+    sorted_by_name.values.map do |district_set|
+      district_set.reduce({}, :merge)
     end
   end
 
   def enrollment_repo_parser(file_tree)
-    filepath = file_tree.dig(:enrollment, :kindergarten)
-    all_parsed_data = parsed_data(filepath)
-    enrollment_by_year = group_names(all_parsed_data)
-    enrollment_data = year_merge(enrollment_by_year)
-  end
+    path_counter = 0
+    all_data = []
+     i = file_tree.values[0].values.count
+     i.times do
+      filepath = file_tree.values[0].values[path_counter]
+      all_parsed_data = parsed_data(filepath)
+      enrollment_by_year = group_names(all_parsed_data)
+        grade_level = file_tree.values[0].keys[path_counter]
+        year_merge(grade_level, enrollment_by_year).each do |data_set|
+          all_data << (data_set)
+        end
+        path_counter += 1
+        end
+        combined_enrollment_by_year(all_data)
+      end
 
-end
+  end
