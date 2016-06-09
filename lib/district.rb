@@ -10,4 +10,8 @@ class District
      @enrollment = enrollment
   end
 
+  def district_kinder_participation_by_year
+    enrollment.kindergarten_participation_by_year
+  end
+
 end

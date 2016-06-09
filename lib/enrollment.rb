@@ -22,4 +22,7 @@ attr_reader :attributes
   def name
     @attributes[:name]
   end
+
+  def kindergarten_participation_comparison(other_enrollment)
+  end
 end

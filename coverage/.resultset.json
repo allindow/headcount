@@ -31,8 +31,6 @@
         null,
         null,
         null,
-        null,
-        null,
         1,
         11,
         1633,
@@ -61,15 +59,21 @@
         1456,
         null,
         null,
+        1,
+        2,
+        null,
+        null,
         null
       ],
       "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/csv_parser.rb": [
-        1,
+        null,
         1,
         1,
         0,
         0,
         null,
+        null,
+        1,
         null,
         null,
         1,
@@ -86,8 +90,8 @@
         null,
         null,
         1,
-        11,
-        17935,
+        12,
+        17938,
         null,
         null,
         null,
@@ -217,6 +221,9 @@
         1,
         262277,
         null,
+        null,
+        1,
+        null,
         null
       ],
       "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/helper.rb": [
@@ -224,6 +231,7 @@
         1,
         null,
         1,
+        null,
         113,
         null,
         null,
@@ -509,16 +517,14 @@
         2,
         null,
         null,
-        null,
         1,
-        null,
-        null,
-        null,
         1,
         1,
         1,
         1,
         1,
+        null,
+        null,
         1,
         1,
         1,
@@ -533,6 +539,6 @@
         null
       ]
     },
-    "timestamp": 1465443160
+    "timestamp": 1465492196
   }
 }
