@@ -1,5 +1,3 @@
-
-
 module CSVParser
   class ::Hash
     def deep_merge(second)
