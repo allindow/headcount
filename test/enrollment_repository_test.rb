@@ -27,7 +27,7 @@ class EnrollmentRepositoryTest < Minitest::Test
     er = EnrollmentRepository.new
     er.load_data({
       :enrollment => {
-        :kindergarten => "./data/Kindergartners in full-day program.csv"
+        :kindergarten => "./test/test_data/test_kinder_full_day.csv"
       }
       })
       enrollment = er.find_by_name("ACADEMY 20")
@@ -36,6 +36,7 @@ class EnrollmentRepositoryTest < Minitest::Test
     end
 
   def test_can_get_enrollment_data_from_high_school_graduation_data
+    ###not testing the right thing here
     er = EnrollmentRepository.new
     er.load_data({
         :enrollment => {

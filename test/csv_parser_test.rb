@@ -59,10 +59,11 @@ def test_that_load_districts
   end
 
   def test_that_loads_high_school_data_and_kindergarten_data
+    ###this isn't actually testing what the title suggests...
     file_tree = {
     :enrollment => {
-      :kindergarten => "./data/Kindergartners in full-day program.csv",
-      :high_school_graduation => "./data/High school graduation rates.csv"
+      :kindergarten => "./test/test_data/test_kinder_full_day.csv",
+      :high_school_graduation => "./test/test_data/test_hs_grad.csv"
         }
       }
       i = file_tree.values[0].values.count
