@@ -5,6 +5,7 @@ require 'minitest/pride'
 require 'rake/testtask'
 require './lib/headcount_analyst'
 require './lib/district_repository'
+# require 'pry'
 
 
 class HeadcountAnalystTest < Minitest::Test
@@ -40,7 +41,7 @@ class HeadcountAnalystTest < Minitest::Test
       })
       hca = HeadcountAnalyst.new(dr)
     correct_district = dr.find_by_name('Academy 20')
-    assert_equal 0.406, hca.rate_calculator(correct_district)
+    assert_equal 0.406, hca.rate_calculator(correct_district, :kindergarten)
   end
 
   def test_that_state_kindergarten_participation_rate_is_compared_to_state
@@ -84,7 +85,7 @@ class HeadcountAnalystTest < Minitest::Test
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
-        :high_school_graduation => "./test/test_data/test_hs_grad.csv"})
+        :high_school_graduation => "./test/test_data/test_hs_grad.csv"}})
     hca = HeadcountAnalyst.new(dr)
     participation_rate = hca.graduation_variation('ACADEMY 20', :against => 'COLORADO')
     assert_equal 0.719, participation_rate

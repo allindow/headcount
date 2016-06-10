@@ -1,5 +1,5 @@
 require_relative 'district_repository'
-
+# require 'pry'
 class HeadcountAnalyst
   include Helper
 
@@ -56,6 +56,7 @@ class HeadcountAnalyst
     district_participation_rate = rate_calculator(first_district, :high_school)
     other_district_participation_rate = rate_calculator(other_district, :high_school)
     variation = district_participation_rate/other_district_participation_rate
+    # binding.pry
     truncate_float(variation)
   end
 
