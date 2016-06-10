@@ -23,5 +23,19 @@ attr_reader :attributes
     kindergarten_participation_by_year[year]
   end
 
+  def graduation_rate_by_year
+    @attributes[:high_school_graduation].reduce({}) do |result, pair|
+      result.merge({pair.first => truncate_float(pair.last)})
+    end
+  end
+
+  def graduation_rate_in_year(year)
+   if graduation_rate_by_year.key?(year)
+     graduation_rate_by_year[year] 
+   else
+     return nil
+   end
+  end
+
 
 end

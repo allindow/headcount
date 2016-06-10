@@ -14,4 +14,8 @@ class District
     enrollment.kindergarten_participation_by_year
   end
 
+  def district_graduation_rate_by_year
+    enrollment.graduation_rate_by_year
+  end
+
 end

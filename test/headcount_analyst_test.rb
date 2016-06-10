@@ -43,7 +43,7 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal 0.406, hca.rate_calculator(correct_district)
   end
 
-  def test_that_state_kindergarten_participation_rate_is_compared_to_district
+  def test_that_state_kindergarten_participation_rate_is_compared_to_state
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -80,4 +80,13 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal result, participation_trend
   end
 
+  def test_that_can_find_high_school_graduation_variation
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :high_school_graduation => "./test/test_data/test_hs_grad.csv"})
+    hca = HeadcountAnalyst.new(dr)
+    participation_rate = hca.graduation_variation('ACADEMY 20', :against => 'COLORADO')
+    assert_equal 0.719, participation_rate
+  end
 end
