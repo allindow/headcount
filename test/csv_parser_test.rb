@@ -58,8 +58,7 @@ def test_that_load_districts
     assert_equal 5, enrollment_repo_parser(file_tree).count
   end
 
-  def test_that_loads_high_school_data_and_kindergarten_data
-    ###this isn't actually testing what the title suggests...
+  def test_that_can_get_how_many_files_are_in_file_tree
     file_tree = {
     :enrollment => {
       :kindergarten => "./test/test_data/test_kinder_full_day.csv",
@@ -69,9 +68,5 @@ def test_that_load_districts
       i = file_tree.values[0].values.count
     assert_equal i, 2
   end
-
-  #need to have better tests for this
-  #edge cases to test:
-  #test that it only returns one instance of the district name
 
 end

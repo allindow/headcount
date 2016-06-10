@@ -31,12 +31,10 @@ class EnrollmentRepositoryTest < Minitest::Test
       }
       })
       enrollment = er.find_by_name("ACADEMY 20")
-      # assert_instance_of Enrollment, enrollment
       assert_equal "ACADEMY 20", enrollment.name
     end
 
   def test_can_get_enrollment_data_from_high_school_graduation_data
-    ###not testing the right thing here
     er = EnrollmentRepository.new
     er.load_data({
         :enrollment => {
@@ -45,6 +43,6 @@ class EnrollmentRepositoryTest < Minitest::Test
         }
         })
         enrollment = er.find_by_name("ACADEMY 20")
-        assert_instance_of Enrollment, enrollment
+        assert enrollment.attributes.keys.include? :high_school_graduation
   end
 end
