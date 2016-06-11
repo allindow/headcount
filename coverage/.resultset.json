@@ -1,7 +1,7 @@
 {
   "Unit Tests": {
     "coverage": {
-      "/Users/tommasinamiller/turinghw/projects/headcount/lib/district_repository.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/district_repository.rb": [
         1,
         1,
         1,
@@ -47,7 +47,7 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/lib/district.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/district.rb": [
         1,
         null,
         1,
@@ -70,7 +70,7 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/lib/csv_parser.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/csv_parser.rb": [
         1,
         null,
         1,
@@ -114,7 +114,6 @@
         null,
         1,
         14,
-        14,
         956,
         null,
         null,
@@ -127,7 +126,6 @@
         17,
         17,
         17,
-        17,
         14,
         null,
         3,
@@ -137,12 +135,11 @@
         null,
         17,
         null,
-        null,
         14,
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/lib/enrollment_repository.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/enrollment_repository.rb": [
         1,
         1,
         1,
@@ -174,7 +171,7 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/lib/enrollment.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/enrollment.rb": [
         1,
         null,
         1,
@@ -217,7 +214,7 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/lib/helper.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/helper.rb": [
         null,
         1,
         null,
@@ -228,7 +225,7 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/test/district_repository_test.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/test/district_repository_test.rb": [
         1,
         1,
         1,
@@ -289,7 +286,7 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/test/district_test.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/test/district_test.rb": [
         1,
         1,
         1,
@@ -309,7 +306,7 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/test/enrollment_repository_test.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/test/enrollment_repository_test.rb": [
         1,
         1,
         1,
@@ -359,7 +356,7 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/test/enrollment_test.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/test/enrollment_test.rb": [
         1,
         1,
         1,
@@ -417,7 +414,7 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/test/headcount_analyst_test.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/test/headcount_analyst_test.rb": [
         1,
         1,
         1,
@@ -527,13 +524,13 @@
         null,
         null
       ],
-      "/Users/tommasinamiller/turinghw/projects/headcount/lib/headcount_analyst.rb": [
+      "/Users/Angela/turing/1module/projects/headcount-proj/headcount/lib/headcount_analyst.rb": [
         1,
         null,
         1,
         1,
-        null,
         1,
+        null,
         1,
         8,
         null,
@@ -555,8 +552,6 @@
         3,
         3,
         3,
-        3,
-        3,
         null,
         null,
         1,
@@ -581,8 +576,6 @@
         null,
         null,
         1,
-        2,
-        2,
         2,
         2,
         2,
@@ -597,6 +590,6 @@
         null
       ]
     },
-    "timestamp": 1465616292
+    "timestamp": 1465617608
   }
 }

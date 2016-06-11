@@ -40,8 +40,7 @@ end
   end
 
   def combined_enrollment_by_year(all_data)
-    sorted_by_name = name_sort(all_data)
-    sorted_by_name.values.map do |district_set|
+    name_sort(all_data).values.map do |district_set|
       district_set.reduce({}, :merge)
     end
   end
@@ -52,8 +51,7 @@ end
      i = file_tree.values[0].values.count
      i.times do
        filepath = file_tree.values[0].values[path_counter]
-       all_parsed_data = parsed_data(filepath)
-       enrollment_by_year = group_names(all_parsed_data)
+       enrollment_by_year = group_names(parsed_data(filepath))
        if file_tree.values[0].keys[path_counter] == :kindergarten
          grade_level = :kindergarten_participation
        else
@@ -64,7 +62,6 @@ end
        end
      path_counter += 1
      end
-    #  binding.pry
     combined_enrollment_by_year(all_data)
   end
 end
