@@ -2,8 +2,8 @@ require_relative 'district_repository'
 
 class HeadcountAnalyst
   include Helper
-
   attr_reader :dr
+
   def initialize(dr)
     @dr = dr
   end
@@ -23,9 +23,7 @@ class HeadcountAnalyst
   def kindergarten_participation_rate_variation(district, options = {:against => "Colorado"})
    first_district = dr.find_by_name(district)
    other_district = dr.find_by_name(options[:against])
-   district_participation_rate = rate_calculator(first_district, :kindergarten)
-   other_district_participation_rate = rate_calculator(other_district, :kindergarten)
-   variation = district_participation_rate/other_district_participation_rate
+   variation = rate_calculator(first_district, :kindergarten)/rate_calculator(other_district, :kindergarten)
    truncate_float(variation)
   end
 
@@ -53,9 +51,7 @@ class HeadcountAnalyst
   def graduation_variation(district, options = {:against => "Colorado"})
     first_district = dr.find_by_name(district)
     other_district = dr.find_by_name(options[:against])
-    district_participation_rate = rate_calculator(first_district, :high_school_graduation)
-    other_district_participation_rate = rate_calculator(other_district, :high_school_graduation)
-    variation = district_participation_rate/other_district_participation_rate
+    variation = rate_calculator(first_district, :high_school_graduation)/rate_calculator(other_district, :high_school_graduation)
     truncate_float(variation)
   end
 
