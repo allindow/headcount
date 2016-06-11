@@ -4,10 +4,10 @@ require_relative 'csv_parser'
 require_relative 'enrollment_repository'
 require_relative 'enrollment'
 
-
 class DistrictRepository
   include CSVParser
-  attr_reader :districts
+  attr_reader :districts,
+              :enrollment_repo
 
   def initialize(districts = [])
     @districts = districts
@@ -39,4 +39,7 @@ class DistrictRepository
     end
   end
 
+  def grade_level_exist?(district, grade_level)
+    find_by_name(district).enrollment.attributes.key? (grade_level)
+  end
 end

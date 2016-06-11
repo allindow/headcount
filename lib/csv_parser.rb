@@ -9,6 +9,7 @@ module CSVParser
     CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
       all_data << { :name => row[:location].upcase}
     end
+    path_counter += 1
   end
   all_data.uniq
 end

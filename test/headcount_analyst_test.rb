@@ -5,12 +5,11 @@ require 'minitest/pride'
 require 'rake/testtask'
 require './lib/headcount_analyst'
 require './lib/district_repository'
-# require 'pry'
-
 
 class HeadcountAnalystTest < Minitest::Test
 
   def test_is_initialized_with_district_repository
+
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -22,6 +21,7 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_hca_has_district_content
+
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -33,6 +33,7 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_rate_calculator_returns_average
+
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -45,6 +46,7 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_state_kindergarten_participation_rate_is_compared_to_state
+
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -57,6 +59,7 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_district_participation_rates_are_compared
+
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -95,6 +98,7 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_can_find_kindergarten_graduation_variation
+
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -105,4 +109,41 @@ class HeadcountAnalystTest < Minitest::Test
     ha = HeadcountAnalyst.new(dr)
   assert_equal 0.709, ha.kindergarten_participation_against_high_school_graduation('ACADEMY 20')
   end
+
+  def test_determines_correlation_between_data_variation
+
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./test/test_data/test_kinder_full_day.csv",
+        :high_school_graduation => "./test/test_data/test_hs_grad.csv"
+        }
+      })
+    ha = HeadcountAnalyst.new(dr)
+    assert ha.kindergarten_participation_correlates_with_high_school_graduation(for: 'ACADEMY 20')
+  end
+
+  def test_can_determine_correlation_statewide
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./test/test_data/test_kinder_full_day.csv",
+        :high_school_graduation => "./test/test_data/test_hs_grad.csv"
+        }
+      })
+    ha = HeadcountAnalyst.new(dr)
+  refute ha.kindergarten_participation_correlates_with_high_school_graduation(:for => 'STATEWIDE')
+ end
+
+ def test_can_compare_multiple_districts
+   dr = DistrictRepository.new
+   dr.load_data({
+     :enrollment => {
+       :kindergarten => "./test/test_data/test_kinder_full_day.csv",
+       :high_school_graduation => "./test/test_data/test_hs_grad.csv"
+       }
+     })
+   ha = HeadcountAnalyst.new(dr)
+   refute ha.kindergarten_participation_correlates_with_high_school_graduation(:across => ['Academy 20', 'Greeley 6'])
+ end
 end
