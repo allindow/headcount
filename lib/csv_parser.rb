@@ -1,23 +1,21 @@
-
-class Hash
-  def deep_merge(second)
-    merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : Array === v1 && Array === v2 ? v1 | v2 : [:undefined, nil, :nil].include?(v2) ? v1 : v2 }
-    self.merge(second.to_h, &merger)
-  end
-end
 module CSVParser
 
-
   def district_repo_parser(file_tree)
-    filepath = file_tree.dig(:enrollment, :kindergarten)
+    path_counter = 0
+    all_data = []
+    i = file_tree.values[0].values.count
+    i.times do
+      filepath = file_tree.values[0].values[path_counter]
     CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
-      { :name => row[:location].upcase}
-    end.uniq
+      all_data << { :name => row[:location].upcase}
+    end
+  end
+  all_data.uniq
 end
 
   def parsed_data(filepath)
     CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
-      { name: row[:location], row[:timeframe].to_i => row[:data].to_f}
+      { name: row[:location].upcase, row[:timeframe].to_i => row[:data].to_f}
     end
   end
 
@@ -66,6 +64,7 @@ end
        end
      path_counter += 1
      end
+    #  binding.pry
     combined_enrollment_by_year(all_data)
   end
 end

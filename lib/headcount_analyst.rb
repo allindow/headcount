@@ -8,19 +8,23 @@ class HeadcountAnalyst
     @dr = dr
   end
 
-  def rate_calculator(location)
+  def rate_calculator(location, grade_level)
     enrollment_data = location.enrollment
-    location_percentages = enrollment_data.kindergarten_participation_by_year.values
+      if grade_level == :kindergarten
+        location_percentages = enrollment_data.kindergarten_participation_by_year.values
+      elsif grade_level == :high_school_graduation
+        location_percentages = enrollment_data.graduation_rate_by_year.values
+      end
     location_sum = location_percentages.reduce(0) { |result, num| result += num }
     location_average = location_sum/location_percentages.count
     truncate_float(location_average)
   end
 
-  def kindergarten_participation_rate_variation(district, options)
+  def kindergarten_participation_rate_variation(district, options = {:against => "Colorado"})
    first_district = dr.find_by_name(district)
    other_district = dr.find_by_name(options[:against])
-   district_participation_rate = rate_calculator(first_district)
-   other_district_participation_rate = rate_calculator(other_district)
+   district_participation_rate = rate_calculator(first_district, :kindergarten)
+   other_district_participation_rate = rate_calculator(other_district, :kindergarten)
    variation = district_participation_rate/other_district_participation_rate
    truncate_float(variation)
   end
@@ -44,4 +48,20 @@ class HeadcountAnalyst
       variation_trend.merge(year_trend)
     end
   end
+
+
+  def graduation_variation(district, options = {:against => "Colorado"})
+    first_district = dr.find_by_name(district)
+    other_district = dr.find_by_name(options[:against])
+    district_participation_rate = rate_calculator(first_district, :high_school_graduation)
+    other_district_participation_rate = rate_calculator(other_district, :high_school_graduation)
+    variation = district_participation_rate/other_district_participation_rate
+    truncate_float(variation)
+  end
+
+
+  def kindergarten_participation_against_high_school_graduation(district)
+    truncate_float(kindergarten_participation_rate_variation(district)/graduation_variation(district))
+    end
+
 end
