@@ -3,6 +3,7 @@ require_relative 'district'
 require_relative 'csv_parser'
 require_relative 'enrollment_repository'
 require_relative 'enrollment'
+# require 'pry'
 
 
 class DistrictRepository
@@ -14,12 +15,12 @@ attr_reader :districts
     @enrollment_repo = []
   end
 
-
   def load_data(file_tree)
     er = EnrollmentRepository.new
     er.load_data(file_tree)
     @enrollment_repo << er
     district_names = district_repo_parser(file_tree)
+    # binding.pry
     district_names.each do |name|
       d = District.new(name)
       d.enrollment = er.find_by_name(name)

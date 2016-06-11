@@ -1,3 +1,4 @@
+require 'pry'
 class Hash
   def deep_merge(second)
     merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : Array === v1 && Array === v2 ? v1 | v2 : [:undefined, nil, :nil].include?(v2) ? v1 : v2 }
@@ -22,7 +23,7 @@ end
 
   def parsed_data(filepath)
     CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
-      { name: row[:location], row[:timeframe].to_i => row[:data].to_f}
+      { name: row[:location].upcase, row[:timeframe].to_i => row[:data].to_f}
     end
   end
 
@@ -71,6 +72,7 @@ end
        end
      path_counter += 1
      end
+     binding.pry
     combined_enrollment_by_year(all_data)
   end
 end

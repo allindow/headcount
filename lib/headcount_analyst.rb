@@ -12,7 +12,7 @@ class HeadcountAnalyst
     enrollment_data = location.enrollment
       if grade_level == :kindergarten
         location_percentages = enrollment_data.kindergarten_participation_by_year.values
-      elsif grade_level == :high_school
+      elsif grade_level == :high_school_graduation
         location_percentages = enrollment_data.high_school_graduation_by_year.values
       end
     location_sum = location_percentages.reduce(0) { |result, num| result += num }
@@ -53,8 +53,8 @@ class HeadcountAnalyst
   def graduation_variation(district, options)
     first_district = dr.find_by_name(district)
     other_district = dr.find_by_name(options[:against])
-    district_participation_rate = rate_calculator(first_district, :high_school)
-    other_district_participation_rate = rate_calculator(other_district, :high_school)
+    district_participation_rate = rate_calculator(first_district, :high_school_graduation)
+    other_district_participation_rate = rate_calculator(other_district, :high_school_graduation)
     variation = district_participation_rate/other_district_participation_rate
     # binding.pry
     truncate_float(variation)
