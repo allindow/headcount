@@ -57,7 +57,45 @@ class HeadcountAnalyst
 
 
   def kindergarten_participation_against_high_school_graduation(district)
-    truncate_float(kindergarten_participation_rate_variation(district)/graduation_variation(district))
+    if dr.grade_level_exist?(district, :high_school_graduation) && dr.grade_level_exist?(district, :kindergarten_participation)
+       truncate_float(kindergarten_participation_rate_variation(district)/graduation_variation(district))
+  else
+    nil
+    end
+  end
+
+  def kindergarten_participation_correlates_with_high_school_graduation(options, district = district)
+      if options[:for] == "STATEWIDE"
+        all_kinder_hs_comparisons(dr)
+      elsif options.keys.include?(:across)
+        all_correlations = options[:across].map do |district|
+          percentage = kindergarten_participation_against_high_school_graduation(district)
+          percentage.between?(0.6, 1.5)
+        end
+        positive_correlation?(all_correlations)
+      else
+        percentage = kindergarten_participation_against_high_school_graduation(options[:for])
+        percentage.between?(0.6, 1.5)
+      end
+  end
+
+    def all_kinder_hs_comparisons(dr)
+      all_correlations = []
+      dr.districts.map do |district|
+      if district.name.upcase == 'COLORADO'
+        all_correlations << nil
+      elsif kindergarten_participation_against_high_school_graduation(district.name).nil?
+        all_correlations << nil
+      else
+      all_correlations  << kindergarten_participation_against_high_school_graduation(district.name).between?(0.6,1.5)
+      end
+    end
+      positive_correlation?(all_correlations)
+
     end
 
+  def positive_correlation?(all_correlations)
+     positive_correlation = all_correlations.count(true).to_f/all_correlations.count.to_f
+    positive_correlation > 0.7
+  end
 end

@@ -56,4 +56,13 @@ class DistrictRepositoryTest < Minitest::Test
     assert_equal 0.436, district.enrollment.kindergarten_participation_in_year(2010)
   end
 
+  def test_that_grade_level_exist
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./test/test_data/test_kinder_full_day.csv"
+        }
+        })
+      refute dr.grade_level_exist?('Calhan RJ-1', :high_school_graduation)
+  end
 end
