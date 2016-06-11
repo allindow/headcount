@@ -58,7 +58,11 @@ class HeadcountAnalyst
 
   def kindergarten_participation_against_high_school_graduation(district)
     if dr.grade_level_exist?(district, :high_school_graduation) && dr.grade_level_exist?(district, :kindergarten_participation)
+        if graduation_variation(district) == 0
+          0.0
+        else
        truncate_float(kindergarten_participation_rate_variation(district)/graduation_variation(district))
+     end
   else
     nil
     end
