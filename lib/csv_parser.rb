@@ -1,12 +1,4 @@
-require 'pry'
-class Hash
-  def deep_merge(second)
-    merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : Array === v1 && Array === v2 ? v1 | v2 : [:undefined, nil, :nil].include?(v2) ? v1 : v2 }
-    self.merge(second.to_h, &merger)
-  end
-end
 module CSVParser
-
 
   def district_repo_parser(file_tree)
     path_counter = 0
@@ -72,7 +64,7 @@ end
        end
      path_counter += 1
      end
-     binding.pry
+    #  binding.pry
     combined_enrollment_by_year(all_data)
   end
 end
