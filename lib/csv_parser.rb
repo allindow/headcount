@@ -14,7 +14,7 @@ module CSVParser
   all_data.uniq
 end
 
-  def parsed_data(filepath)
+  def parsed_enrollment_data(filepath)
     CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
       { name: row[:location].upcase, row[:timeframe].to_i => row[:data].to_f}
     end
@@ -34,14 +34,8 @@ end
     end
   end
 
-  def name_sort(all_data)
-    all_data.group_by do |hash|
-      hash[:name]
-    end
-  end
-
   def combined_enrollment_by_year(all_data)
-    name_sort(all_data).values.map do |district_set|
+    group_names(all_data).values.map do |district_set|
       district_set.reduce({}, :merge)
     end
   end
@@ -52,7 +46,7 @@ end
      i = file_tree.values[0].values.count
      i.times do
        filepath = file_tree.values[0].values[path_counter]
-       enrollment_by_year = group_names(parsed_data(filepath))
+       enrollment_by_year = group_names(parsed_enrollment_data(filepath))
        if file_tree.values[0].keys[path_counter] == :kindergarten
          grade_level = :kindergarten_participation
        else
@@ -65,4 +59,30 @@ end
      end
     combined_enrollment_by_year(all_data)
   end
+
+  def parsed_test_data(filepath)
+    CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
+      if row.headers.include? :score
+        { name: row[:location].upcase, year: row[:timeframe].to_i, row[:score].downcase.to_sym => row[:data].to_f}
+      else
+        if row[:race_ethnicity].downcase == "hawaiian/pacific islander"
+          row[:race_ethnicity] = "pacific islander"
+        end
+          { name: row[:location].upcase, year: row[:timeframe].to_i, row[:race_ethnicity].gsub(" ","_").downcase.to_sym => row[:data].to_f}
+        end
+      end
+    end
+
+  def statewide_test_repo_parser(file_tree)
+    path_counter = 0
+    all_data = []
+    i = file_tree.values[0].values.count
+    i.times do
+      filepath = file_tree.values[0].values[path_counter]
+      all_data << parsed_test_data(filepath)
+      path_counter += 1
+        end
+      all_data.flatten
+  end
+
 end
