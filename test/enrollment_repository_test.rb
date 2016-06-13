@@ -35,6 +35,7 @@ class EnrollmentRepositoryTest < Minitest::Test
     end
 
   def test_can_get_enrollment_data_from_high_school_graduation_data
+    skip
     er = EnrollmentRepository.new
     er.load_data({
         :enrollment => {

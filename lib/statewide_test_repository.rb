@@ -11,7 +11,7 @@ class StatewideTestRepository
   end
 
   def load_data(file_tree)
-    statewide_data = statewide_test_repo_parser(file_tree)
+      statewide_data = statewide_test_repo_parser(file_tree)
     statewide_data.each do |data|
       @statewide_testing << StatewideTest.new(data)
     end
