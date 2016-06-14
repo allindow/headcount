@@ -65,7 +65,7 @@ end
     grade_level = file_tree.values[0].keys[path_counter]
     CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
       if row.headers.include? :score
-        { name: row[:location].upcase, grade_level => {row[:score].downcase.to_sym => {row[:timeframe].to_i => row[:data].to_f}}}
+        { name: row[:location].upcase, grade_level => {row[:timeframe].to_i => {row[:score].downcase.to_sym => row[:data].to_f}}}
       else
         if row[:race_ethnicity].downcase == "hawaiian/pacific islander"
           row[:race_ethnicity] = "pacific islander"
@@ -83,8 +83,39 @@ end
        all_data << parsed_test_data(file_tree, path_counter)
        path_counter += 1
      end
-     require "pry"; binding.pry
      by_district = group_names(all_data.flatten)
-  end
+     new_hash = {}
+     by_district.values.map do |district_set| #an array of hashes and each hash has a packaged line of data {:name=>"COLORADO", :third_grade=>{:math=>{2008=>0.697}}}
+       district_set.each do |district_record| #{:name=>"COLORADO", :hispanic=>{2012=>{:reading=>0.5158}}}
+         district = district_record[:name]
+         grade_or_race_symbol = district_record.keys[1]
+         subject = district_record[district_record.keys[1]].values[0].keys[0]
+         year = district_record[district_record.keys[1]].keys[0]
+         if new_hash[district].nil?
+           new_hash[district] = district_record
+         end
+         if new_hash.key?(district) && new_hash[district].key?(grade_or_race_symbol) && new_hash[district][grade_or_race_symbol].key?(year)
+           new_inner_hash = new_hash[district].values[1][year]
+           record_inner_hash = district_record[grade_or_race_symbol].values[0]
+           new_subject_data = new_inner_hash.merge(record_inner_hash)
+           new_year_hash = new_hash[district].values[1]
+           new_hash[district] = new_hash[district].merge({:name => district, grade_or_race_symbol => new_year_hash.merge({year => new_subject_data})})
+         end
+         if new_hash.key?(district) && new_hash[district].key?(grade_or_race_symbol) && new_hash[district][grade_or_race_symbol].key?(year) == false
+           new_middle_hash = new_hash[district][grade_or_race_symbol]
+           record_middle_hash = district_record[grade_or_race_symbol]
+           new_year_data = new_middle_hash.merge(record_middle_hash)
+           new_hash[district] = new_hash[district].merge({:name => district, grade_or_race_symbol => new_year_data})
+         end
+         if new_hash.key?(district) && new_hash[district].key?(grade_or_race_symbol) == false
+           district_record.delete(:name)
+           new_data = new_hash[district].merge(district_record)
+           new_hash[district].merge!(new_data)
+         end
+     end
+     require "pry"; binding.pry
+   end
+   require "pry"; binding.pry
+end
 
 end
