@@ -7,9 +7,13 @@ require './lib/statewide_test_repository'
 require './lib/statewide_test'
 
 class StatewideTestRepositoryTest < Minitest::Test
+  attr_reader :str
+
+  def setup
+    @str = StatewideTestRepository.new
+  end
 
   def test_can_put_load_data
-    str = StatewideTestRepository.new
     str.load_data({
       :statewide_testing => {
       :third_grade => "./test/test_data/test 3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
@@ -23,7 +27,6 @@ class StatewideTestRepositoryTest < Minitest::Test
   end
 
   def test_that_statewide_testing_contains_statewide_test_objects
-    str = StatewideTestRepository.new
     str.load_data({
       :statewide_testing => {
       :third_grade => "./test/test_data/test 3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
@@ -37,7 +40,6 @@ class StatewideTestRepositoryTest < Minitest::Test
   end
 
   def test_that_can_find_statewide_test_object_by_name
-    str = StatewideTestRepository.new
     str.load_data({
       :statewide_testing => {
       :third_grade => "./test/test_data/test 3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
@@ -58,4 +60,5 @@ class StatewideTestRepositoryTest < Minitest::Test
       statewide_test_object = str.find_by_name("Academy 20")
     assert_equal expected, statewide_test_object.attributes
   end
+
 end
