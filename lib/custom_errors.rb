@@ -1,0 +1,3 @@
+class UnknownDataError < StandardError
+
+end
