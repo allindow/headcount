@@ -68,7 +68,7 @@ class HeadcountAnalyst
     end
   end
 
-  def kindergarten_participation_correlates_with_high_school_graduation(options, district = district)
+  def kindergarten_participation_correlates_with_high_school_graduation(options)
       if options[:for] == "STATEWIDE"
         all_kinder_hs_comparisons(dr)
       elsif options.keys.include?(:across)
