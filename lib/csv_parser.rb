@@ -114,7 +114,7 @@ end
          end
      end
    end
-   require "pry"; binding.pry
+   new_hash.values
 end
 
 end
