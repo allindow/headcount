@@ -96,9 +96,9 @@ end
          end
          if new_hash.key?(district) && new_hash[district].key?(grade_or_race_symbol) && new_hash[district][grade_or_race_symbol].key?(year)
            new_inner_hash = new_hash[district].values[1][year]
-           record_inner_hash = district_record[grade_or_race_symbol].values[0]
+           record_inner_hash = district_record[grade_or_race_symbol][year]
            new_subject_data = new_inner_hash.merge(record_inner_hash)
-           new_year_hash = new_hash[district].values[1]
+           new_year_hash = new_hash[district][grade_or_race_symbol]
            new_hash[district] = new_hash[district].merge({:name => district, grade_or_race_symbol => new_year_hash.merge({year => new_subject_data})})
          end
          if new_hash.key?(district) && new_hash[district].key?(grade_or_race_symbol) && new_hash[district][grade_or_race_symbol].key?(year) == false

@@ -14,7 +14,7 @@
       <img src="./assets/0.10.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2016-06-13T20:15:32-06:00">2016-06-13T20:15:32-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2016-06-13T20:55:49-06:00">2016-06-13T20:55:49-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,7 +25,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         5.53
+         6.05
        </span>
     </span> hits/line)
   </h2>
@@ -57,7 +57,7 @@
         <td>82</td>
         <td>51</td>
         <td>31</td>
-        <td>7.2</td>
+        <td>7.9</td>
       </tr>
       
       <tr>
@@ -648,44 +648,44 @@
           <code class="ruby">     by_district.values.map do |district_set| #an array of hashes and each hash has a packaged line of data {:name=&gt;&quot;COLORADO&quot;, :third_grade=&gt;{:math=&gt;{2008=&gt;0.697}}}</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="89">
-          <span class="hits">2</span>
+        <li class="covered" data-hits="3" data-linenumber="89">
+          <span class="hits">3</span>
           
           <code class="ruby">       district_set.each do |district_record| #{:name=&gt;&quot;COLORADO&quot;, :hispanic=&gt;{2012=&gt;{:reading=&gt;0.5158}}}</code>
         </li>
       
-        <li class="covered" data-hits="29" data-linenumber="90">
-          <span class="hits">29</span>
+        <li class="covered" data-hits="34" data-linenumber="90">
+          <span class="hits">34</span>
           
           <code class="ruby">         district = district_record[:name]</code>
         </li>
       
-        <li class="covered" data-hits="29" data-linenumber="91">
-          <span class="hits">29</span>
+        <li class="covered" data-hits="34" data-linenumber="91">
+          <span class="hits">34</span>
           
           <code class="ruby">         grade_or_race_symbol = district_record.keys[1]</code>
         </li>
       
-        <li class="covered" data-hits="29" data-linenumber="92">
-          <span class="hits">29</span>
+        <li class="covered" data-hits="34" data-linenumber="92">
+          <span class="hits">34</span>
           
           <code class="ruby">         subject = district_record[district_record.keys[1]].values[0].keys[0]</code>
         </li>
       
-        <li class="covered" data-hits="29" data-linenumber="93">
-          <span class="hits">29</span>
+        <li class="covered" data-hits="34" data-linenumber="93">
+          <span class="hits">34</span>
           
           <code class="ruby">         year = district_record[district_record.keys[1]].keys[0]</code>
         </li>
       
-        <li class="covered" data-hits="29" data-linenumber="94">
-          <span class="hits">29</span>
+        <li class="covered" data-hits="34" data-linenumber="94">
+          <span class="hits">34</span>
           
           <code class="ruby">         if new_hash[district].nil?</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="95">
-          <span class="hits">2</span>
+        <li class="covered" data-hits="3" data-linenumber="95">
+          <span class="hits">3</span>
           
           <code class="ruby">           new_hash[district] = district_record</code>
         </li>
@@ -696,38 +696,38 @@
           <code class="ruby">         end</code>
         </li>
       
-        <li class="covered" data-hits="29" data-linenumber="97">
-          <span class="hits">29</span>
+        <li class="covered" data-hits="34" data-linenumber="97">
+          <span class="hits">34</span>
           
           <code class="ruby">         if new_hash.key?(district) &amp;&amp; new_hash[district].key?(grade_or_race_symbol) &amp;&amp; new_hash[district][grade_or_race_symbol].key?(year)</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="98">
-          <span class="hits">7</span>
+        <li class="covered" data-hits="9" data-linenumber="98">
+          <span class="hits">9</span>
           
           <code class="ruby">           new_inner_hash = new_hash[district].values[1][year]</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="99">
-          <span class="hits">7</span>
+        <li class="covered" data-hits="9" data-linenumber="99">
+          <span class="hits">9</span>
           
-          <code class="ruby">           record_inner_hash = district_record[grade_or_race_symbol].values[0]</code>
+          <code class="ruby">           record_inner_hash = district_record[grade_or_race_symbol][year]</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="100">
-          <span class="hits">7</span>
+        <li class="covered" data-hits="9" data-linenumber="100">
+          <span class="hits">9</span>
           
           <code class="ruby">           new_subject_data = new_inner_hash.merge(record_inner_hash)</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="101">
-          <span class="hits">7</span>
+        <li class="covered" data-hits="8" data-linenumber="101">
+          <span class="hits">8</span>
           
-          <code class="ruby">           new_year_hash = new_hash[district].values[1]</code>
+          <code class="ruby">           new_year_hash = new_hash[district][grade_or_race_symbol]</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="102">
-          <span class="hits">7</span>
+        <li class="covered" data-hits="8" data-linenumber="102">
+          <span class="hits">8</span>
           
           <code class="ruby">           new_hash[district] = new_hash[district].merge({:name =&gt; district, grade_or_race_symbol =&gt; new_year_hash.merge({year =&gt; new_subject_data})})</code>
         </li>
@@ -738,32 +738,32 @@
           <code class="ruby">         end</code>
         </li>
       
-        <li class="covered" data-hits="29" data-linenumber="104">
-          <span class="hits">29</span>
+        <li class="covered" data-hits="33" data-linenumber="104">
+          <span class="hits">33</span>
           
           <code class="ruby">         if new_hash.key?(district) &amp;&amp; new_hash[district].key?(grade_or_race_symbol) &amp;&amp; new_hash[district][grade_or_race_symbol].key?(year) == false</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="105">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="9" data-linenumber="105">
+          <span class="hits">9</span>
           
           <code class="ruby">           new_middle_hash = new_hash[district][grade_or_race_symbol]</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="106">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="9" data-linenumber="106">
+          <span class="hits">9</span>
           
           <code class="ruby">           record_middle_hash = district_record[grade_or_race_symbol]</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="107">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="9" data-linenumber="107">
+          <span class="hits">9</span>
           
           <code class="ruby">           new_year_data = new_middle_hash.merge(record_middle_hash)</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="108">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="9" data-linenumber="108">
+          <span class="hits">9</span>
           
           <code class="ruby">           new_hash[district] = new_hash[district].merge({:name =&gt; district, grade_or_race_symbol =&gt; new_year_data})</code>
         </li>
@@ -774,26 +774,26 @@
           <code class="ruby">         end</code>
         </li>
       
-        <li class="covered" data-hits="29" data-linenumber="110">
-          <span class="hits">29</span>
+        <li class="covered" data-hits="33" data-linenumber="110">
+          <span class="hits">33</span>
           
           <code class="ruby">         if new_hash.key?(district) &amp;&amp; new_hash[district].key?(grade_or_race_symbol) == false</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="111">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="16" data-linenumber="111">
+          <span class="hits">16</span>
           
           <code class="ruby">           district_record.delete(:name)</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="112">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="16" data-linenumber="112">
+          <span class="hits">16</span>
           
           <code class="ruby">           new_data = new_hash[district].merge(district_record)</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="113">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="16" data-linenumber="113">
+          <span class="hits">16</span>
           
           <code class="ruby">           new_hash[district].merge!(new_data)</code>
         </li>
