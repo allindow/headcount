@@ -95,7 +95,7 @@ end
            new_hash[district] = district_record
          end
          if new_hash.key?(district) && new_hash[district].key?(grade_or_race_symbol) && new_hash[district][grade_or_race_symbol].key?(year)
-           new_inner_hash = new_hash[district].values[1][year]
+           new_inner_hash = new_hash[district][grade_or_race_symbol][year]
            record_inner_hash = district_record[grade_or_race_symbol][year]
            new_subject_data = new_inner_hash.merge(record_inner_hash)
            new_year_hash = new_hash[district][grade_or_race_symbol]
@@ -113,7 +113,6 @@ end
            new_hash[district].merge!(new_data)
          end
      end
-     require "pry"; binding.pry
    end
    require "pry"; binding.pry
 end
