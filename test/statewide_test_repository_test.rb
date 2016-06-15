@@ -22,7 +22,7 @@ class StatewideTestRepositoryTest < Minitest::Test
     })
   end
 
-  def test_can_put_load_data
+  def test_can_load_data
     refute str.statewide_testing.empty?
   end
 
