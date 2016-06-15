@@ -1,4 +1,5 @@
 require_relative 'economic_parser'
+require_relative 'economic_profile'
 
 class EconomicProfileRepository
   include EconomicParser
@@ -14,4 +15,12 @@ class EconomicProfileRepository
       @profiles << EconomicProfile.new(data)
     end
   end
+
+    def find_by_name(name)
+      selection = @profiles.select do |data_set|
+        data_set.attributes[:name].upcase == name.upcase
+      end
+      selection.empty? ? nil : selection[0]
+    end
+
 end

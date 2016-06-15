@@ -5,6 +5,7 @@ require 'minitest/pride'
 require 'rake/testtask'
 require './lib/statewide_test_repository'
 require './lib/statewide_test'
+require './lib/statewide_parser'
 
 class StatewideTestRepositoryTest < Minitest::Test
   attr_reader :str
