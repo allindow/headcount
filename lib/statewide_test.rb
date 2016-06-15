@@ -1,6 +1,6 @@
 require_relative 'helper'
 require_relative 'custom_errors'
-require 'pry'
+
 
 class StatewideTest
   include Helper
@@ -33,7 +33,11 @@ class StatewideTest
 
     def proficient_for_subject_by_grade_in_year(subject, grade, year)
       raise UnknownDataError unless valid_data(subject, grade, year)
-      truncate_float(proficient_by_grade(grade)[year][subject])
+      if (proficient_by_grade(grade)[year][subject]) > 0
+        truncate_float(proficient_by_grade(grade)[year][subject])
+      else
+        "N/A"
+      end
     end
 
     def proficient_for_subject_by_race_in_year(subject, race, year)

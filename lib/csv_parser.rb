@@ -4,17 +4,21 @@ module CSVParser
   include Helper
 
   def district_repo_parser(file_tree)
-    path_counter = 0
     all_data = []
-    i = file_tree.values[0].values.count
+    files = file_tree.values.reduce({}, :merge!)
+    i = files.count
+    path_counter = 0
     i.times do
-      filepath = file_tree.values[0].values[path_counter]
-      CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
-        all_data << { :name => row[:location].upcase}
+      filepath = files[files.keys[path_counter]]
+       CSV.foreach(filepath, headers: true, header_converters: :symbol).each do |row|
+         district = { :name => row[:location].upcase}
+        if row[:location] && all_data.include?(district) == false
+          all_data << district
+        end
       end
       path_counter += 1
     end
-    all_data.uniq
+    all_data
   end
 
   def parsed_enrollment_data(filepath)
@@ -123,6 +127,6 @@ module CSVParser
      district_record[district_record.keys[1]].values[0].keys[0],
      district_record[district_record.keys[1]].keys[0],
      truncate_float(district_record[district_record.keys[1]].values[0].values[0])]
-   end
+  end
 
 end
