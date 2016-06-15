@@ -66,12 +66,14 @@ module EconomicParser
       new_hash = {}
       by_district.values.map do |district_set|
         district_set.each do |district_record|
-          require "pry"; binding.pry
+          update_new_economic_data(district_record, new_hash)
         end
       end
+      require "pry"; binding.pry
+      new_hash
   end
 
-    def update_new_data(district_record, new_hash)
+    def update_new_economic_data(district_record, new_hash)
       category = district_record.keys[0]
       if category == :free_or_reduced_price_lunch
         lunch_parser(new_hash, district_record)
@@ -80,6 +82,7 @@ module EconomicParser
       end
       new_hash
     end
+
     def lunch_record_data(district_record)
       [district_record.keys[0], district_record.values[0].keys[0],
       district_record.values[0].values[0],
@@ -92,7 +95,7 @@ module EconomicParser
     new_hash[district] = new_district                     if district_new?(new_hash, district)
     new_hash[district][category][year] = data_point       if year_new?(new_hash, district, category, year)
     new_hash[district][category] = {year => data_point}   if category_new?(new_hash, district, category)
-    new_hash[district][category][year][type] = new_record[category][year][type]   if type_new?(new_hash, district, category, year, type)
+    new_hash[district][category][year][type] = district_record[category][year][type]   if type_new?(new_hash, district, category, year, type)
   end
 
   def other_category_parser(new_hash, district_record)
