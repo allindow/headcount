@@ -1,9 +1,8 @@
-require 'csv'
 require_relative 'enrollment'
-require_relative 'csv_parser'
+require_relative 'enrollment_parser'
 
 class EnrollmentRepository
-  include CSVParser
+  include EnrollmentParser
   attr_reader :enrollments
 
   def initialize(enrollments = [])

@@ -1,13 +1,13 @@
 require 'csv'
 require_relative 'district'
-require_relative 'csv_parser'
 require_relative 'enrollment_repository'
 require_relative 'enrollment'
 require_relative 'statewide_test'
 require_relative 'statewide_test_repository'
+require_relative 'district_parser'
 
 class DistrictRepository
-  include CSVParser
+  include DistrictParser
   attr_reader :districts
 
   def initialize(districts = [])
