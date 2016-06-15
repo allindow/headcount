@@ -3,7 +3,7 @@ require_relative 'helper'
 class Enrollment
   include Helper
 
-attr_reader :attributes
+  attr_reader :attributes
 
   def initialize(attributes)
     @attributes = attributes
@@ -30,8 +30,8 @@ attr_reader :attributes
   end
 
   def graduation_rate_in_year(year)
-   if graduation_rate_by_year.key?(year)
-     graduation_rate_by_year[year] 
+   if graduation_rate_by_year[year]
+     graduation_rate_by_year[year]
    else
      return nil
    end

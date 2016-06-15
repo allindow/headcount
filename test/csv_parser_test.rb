@@ -4,13 +4,15 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/district_repository'
 require './lib/district'
-require './lib/csv_parser'
+require './lib/statewide_parser'
 require './lib/enrollment_repository'
 require './lib/enrollment'
+require './lib/district_parser'
+require './lib/enrollment_parser'
 
 
 class CSVParserTest < Minitest::Test
-  include CSVParser
+  include StatewideParser, DistrictParser, EnrollmentParser
 
   def test_that_load_districts
     file_tree = {

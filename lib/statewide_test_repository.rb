@@ -1,9 +1,8 @@
-require 'csv'
 require_relative 'statewide_test'
-require_relative 'csv_parser'
+require_relative 'statewide_parser'
 
 class StatewideTestRepository
-  include CSVParser
+  include StatewideParser
   attr_reader     :statewide_testing
 
   def initialize(statewide_testing = [])

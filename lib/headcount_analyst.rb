@@ -61,10 +61,10 @@ class HeadcountAnalyst
         if graduation_variation(district) == 0
           0.0
         else
-       truncate_float(kindergarten_participation_rate_variation(district)/graduation_variation(district))
-     end
-  else
-    nil
+          truncate_float(kindergarten_participation_rate_variation(district)/graduation_variation(district))
+        end
+    else
+      nil
     end
   end
 
@@ -83,20 +83,19 @@ class HeadcountAnalyst
       end
   end
 
-    def all_kinder_hs_comparisons(dr)
-      all_correlations = []
-      dr.districts.map do |district|
+  def all_kinder_hs_comparisons(dr)
+    all_correlations = []
+    dr.districts.map do |district|
       if district.name.upcase == 'COLORADO'
         all_correlations << nil
       elsif kindergarten_participation_against_high_school_graduation(district.name).nil?
         all_correlations << nil
       else
-      all_correlations  << kindergarten_participation_against_high_school_graduation(district.name).between?(0.6,1.5)
+        all_correlations  << kindergarten_participation_against_high_school_graduation(district.name).between?(0.6,1.5)
       end
     end
-      positive_correlation?(all_correlations)
-
-    end
+    positive_correlation?(all_correlations)
+  end
 
   def positive_correlation?(all_correlations)
      positive_correlation = all_correlations.count(true).to_f/all_correlations.count.to_f
