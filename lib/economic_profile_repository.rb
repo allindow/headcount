@@ -16,11 +16,20 @@ class EconomicProfileRepository
     end
   end
 
+    # def find_by_name(name)
+    #   selection = @profiles.select do |data_set|
+    #     data_set.attributes[:name].upcase == name.upcase
+    #   end
+    #   selection.empty? ? nil : selection[0]
+    # end
     def find_by_name(name)
       selection = @profiles.select do |data_set|
-        data_set.attributes[:name].upcase == name.upcase
+        if name.is_a? Hash
+        data_set.name.upcase == name[:name].upcase
+      else
+        data_set.name.upcase == name.upcase
       end
+    end
       selection.empty? ? nil : selection[0]
     end
-
 end

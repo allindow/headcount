@@ -13,7 +13,8 @@ class DistrictRepository
   def initialize(districts = [])
     @districts = districts
     @str = StatewideTestRepository.new
-    @er = EnrollmentRepository.new
+    @er  = EnrollmentRepository.new
+    @epr  = EconomicProfileRepository.new
   end
 
   def er_tree(file_tree)
@@ -28,14 +29,21 @@ class DistrictRepository
     str_tree
   end
 
+  def epr_tree(file_tree)
+    epr_tree = {}
+    epr_tree[:economic_profile] = file_tree[:economic_profile]
+    epr_tree
+  end
 
   def file_tree_paths(file_tree)
-    if file_tree[:enrollment]
-      @er.load_data(er_tree(file_tree))
-    end
-    if file_tree[:statewide_testing]
-      @str.load_data(str_tree(file_tree))
-    end
+    # if file_tree[:enrollment]
+      @er.load_data(er_tree(file_tree)) if file_tree[:enrollment]
+    # end
+    # if file_tree[:statewide_testing]
+      @str.load_data(str_tree(file_tree)) if file_tree[:statewide_testing]
+    # end
+                                            # if file_tree[:economic_profile]
+      @epr.load_data(epr_tree(file_tree)) if file_tree[:economic_profile]
   end
 
   def load_data(file_tree)
@@ -43,8 +51,9 @@ class DistrictRepository
     district_names = district_repo_parser(file_tree)
     district_names.each do |name|
       d = District.new(name)
-      d.enrollment = @er.find_by_name(name) if file_tree[:enrollment]
-      d.statewide_test = @str.find_by_name(name) if file_tree[:statewide_testing]
+      d.enrollment = @er.find_by_name(name)        if file_tree[:enrollment]
+      d.statewide_test = @str.find_by_name(name)   if file_tree[:statewide_testing]
+      d.economic_profile = @epr.find_by_name(name) if file_tree[:economic_profile]
       @districts << d
    end
  end

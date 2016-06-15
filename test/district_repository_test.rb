@@ -5,7 +5,7 @@ require 'minitest/pride'
 require './lib/district_repository'
 require './lib/district'
 require 'rake/testtask'
-
+require './lib/economic_profile_repository'
 
 class DistrictRepositoryTest < Minitest::Test
 
@@ -122,7 +122,6 @@ class DistrictRepositoryTest < Minitest::Test
   end
 
   def test_load_data_creates_enrollment_and_statewide_objects_with_data
-    skip
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -149,7 +148,7 @@ class DistrictRepositoryTest < Minitest::Test
     refute district.statewide_test.attributes.keys.empty?
     assert_instance_of StatewideTest, district.statewide_test
     refute district.economic_profile.attributes.keys.empty?
-    assert_instance_of EconomicProfile, ditrict.economic_profile
+    assert_instance_of EconomicProfile, district.economic_profile
   end
 
 end

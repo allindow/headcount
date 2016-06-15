@@ -3,6 +3,7 @@ SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/economic_profile'
+require './lib/economic_profile_repository'
 require 'rake/testtask'
 
 class EconomicProfileTest < Minitest::Test
@@ -32,67 +33,56 @@ class EconomicProfileTest < Minitest::Test
   end
 
   def test_can_get_median_household_income_in_year
-    skip
-    assert_equal 0, ep.median_household_income_in_year(2005)
-    assert_equal 0, ep.median_household_income_in_year(2009)
+    assert_equal 87056, ep.median_household_income_in_year(2008)
+    assert_equal 87635, ep.median_household_income_in_year(2009)
   end
 
   def test_unknown_year_raises_unknown_data_error
-    skip
     assert_raises(UnknownDataError) do
       ep.median_household_income_in_year(2016)
     end
   end
 
   def test_can_get_median_household_income_average
-    skip
-    assert_equal 0,ep.median_household_income_average
+    assert_equal 87635, ep.median_household_income_average
   end
 
   def test_can_get_children_in_poverty_in_year
-    skip
-    assert_equal 0, ep.children_in_poverty_in_year(2012)
-    assert_equal 0, ep.children_in_poverty_in_year(2009)
+    assert_equal 0.064, ep.children_in_poverty_in_year(2012)
+    assert_equal 0.044, ep.children_in_poverty_in_year(2008)
   end
 
   def test_unknown_year_for_children_poverty_raises_error
-    skip
     assert_raises(UnknownDataError) do
       ep.children_in_poverty_in_year(1987)
     end
   end
 
   def test_can_get_free_or_reduced_price_lunch_percentage_in_year
-    skip
-    assert_equal 0.0,ep.free_or_reduced_price_lunch_percentage_in_year(2014)
+    assert_equal 0.127, ep.free_or_reduced_price_lunch_percentage_in_year(2014)
   end
 
   def test_unknown_year_for_lunch_data_raises_error
-    skip
     assert_raises(UnknownDataError) do
       ep.free_or_reduced_price_lunch_percentage_in_year(2020)
     end
   end
 
   def test_can_get_free_reduced_lunch_data_in_year
-    skip
-    assert_equal 900, ep.free_or_reduced_price_lunch_number_in_year(2014)
+    assert_equal 3132, ep.free_or_reduced_price_lunch_number_in_year(2014)
   end
 
   def test_unknown_year_for_lunch_in_year_raises_error
-    skip
     assert_raises(UnknownDataError) do
       ep.free_or_reduced_price_lunch_number_in_year(2030)
     end
   end
 
   def test_can_get_title_i_in_year
-    skip
-    assert_equal 0.777, ep.title_i_in_year(2015)
+    assert_equal 0.027, ep.title_i_in_year(2014)
   end
 
   def test_unknown_year_for_title_i_raises_error
-    skip
     assert_raises(UnknownDataError) do
       ep.title_i_in_year(1870)
     end

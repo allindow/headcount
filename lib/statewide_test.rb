@@ -8,11 +8,6 @@ class StatewideTest
 
     def initialize(attributes)
       @attributes = attributes
-      # @parameter = {3 => :third_grade, 8 => :eighth_grade,
-      #               :asian => :asian, :pacific_islander => :pacific_islander,
-      #               :black => :black, :hispanic => :hispanic, :native_american => :native_american,
-      #               :two_or_more => :two_or_more, :white => :white, :reading => :reading,
-      #               :writing => :writing, :math => :math}
     end
 
     def parameter
