@@ -1,4 +1,5 @@
 require_relative 'helper'
+require 'csv'
 
 module StatewideParser
   include Helper
