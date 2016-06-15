@@ -1,4 +1,3 @@
-
 module Helper
 
   def truncate_float(float)

@@ -1,4 +1,7 @@
+require_relative 'helper'
+
 module CSVParser
+  include Helper
 
   def district_repo_parser(file_tree)
     path_counter = 0
@@ -90,7 +93,8 @@ module CSVParser
   end
 
   def update_new_data(district_record, new_hash, district, category, subject, year, data_point)
-    new_hash[district] = district_record                             if district_new?(new_hash, district)
+    new_district = {:name => district, category => {year => {subject => data_point}}}
+    new_hash[district] = new_district                                if district_new?(new_hash, district)
     new_hash[district][category][year][subject] = data_point         if subject_new?(new_hash, district, category, year)
     new_hash[district][category][year] = {subject => data_point}     if year_new?(new_hash, district, category, year)
     new_hash[district][category] = {year => {subject => data_point}} if category_new?(new_hash, district, category)
@@ -118,7 +122,7 @@ module CSVParser
      district_record.keys[1],
      district_record[district_record.keys[1]].values[0].keys[0],
      district_record[district_record.keys[1]].keys[0],
-     district_record[district_record.keys[1]].values[0].values[0]]
+     truncate_float(district_record[district_record.keys[1]].values[0].values[0])]
    end
 
 end
