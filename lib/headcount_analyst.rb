@@ -177,7 +177,11 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_against_household_income(dist)
-    truncate_float(kinder_rate_variation(dist)/income_variation(dist))
+    if income_variation(dist) == 0.0
+      return 0.0
+    else
+      truncate_float(kinder_rate_variation(dist)/income_variation(dist))
+    end
   end
 
   def statewide_lunch_poverty_grad
@@ -248,5 +252,48 @@ class HeadcountAnalyst
     ResultSet.new(matching_districts: matching, statewide_average: ResultEntry.new(statewide_income_poverty))
   end
 
+  def kinder_and_household?(district)
+    district.enrollment.attributes[:kindergarten_participation] &&
+    district.economic_profile.attributes[:median_household_income]
+  end
+
+  def statewide_correlation
+    count = 0
+    dr.districts.each do |district|
+      if kinder_and_household?(district) && district.name != "COLORADO"
+        result = kindergarten_participation_against_household_income(district)
+        count += 1 if result.between?(0.6,1.5)
+      end
+    end
+   count.to_f/dr.districts.count.to_f > 0.7 ? true : false
+  end
+
+
+  def across_correlation(districts)
+    total = []
+    districts.each do |district|
+      dist = dr.find_by_name(district)
+      if kinder_and_household?(dist)
+        result = kindergarten_participation_against_household_income(dist)
+        total << result
+      end
+    end
+    final = total.inject(:+).to_f/districts.count.to_f
+    final > 0.7 ? true : false
+  end
+
+
+  def kindergarten_participation_correlates_with_household_income(options)
+    if options[:for] == "STATEWIDE"
+      statewide_correlation
+    elsif options[:across]
+      across_correlation(options[:across])
+    else
+      district = dr.find_by_name(options[:for])
+      result = kindergarten_participation_against_household_income(district)
+      result.between?(0.6,1.5) ? true : false
+    end
+
+  end
 
 end

@@ -12,7 +12,6 @@ require './lib/economic_profile_repository'
 class HeadcountAnalystTest < Minitest::Test
 
   def test_is_initialized_with_district_repository
-
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -24,7 +23,6 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_hca_has_district_content
-
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -36,7 +34,6 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_rate_calculator_returns_average
-
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -49,7 +46,6 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_state_kindergarten_participation_rate_is_compared_to_state
-
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -62,7 +58,6 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_district_participation_rates_are_compared
-
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -101,7 +96,6 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_that_can_find_kindergarten_graduation_variation
-
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -114,7 +108,6 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_determines_correlation_between_data_variation
-
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -139,7 +132,6 @@ class HeadcountAnalystTest < Minitest::Test
  end
 
  def test_can_compare_multiple_districts
-   
    dr = DistrictRepository.new
    dr.load_data({
      :enrollment => {
@@ -243,6 +235,23 @@ class EconomicProfileAnalysisTest < Minitest::Test
     assert_equal 1.855, ha.kindergarten_participation_against_household_income(district)
   end
 
+  def test_kinder_part_against_household_income
+    district = dr.find_by_name("Adams county 14")
+    assert_equal 1.855, ha.kindergarten_participation_against_household_income(district)
+  end
+
+  def test_kinder_correlates_with_household_income
+    refute ha.kindergarten_participation_correlates_with_household_income(for: 'Adams county 14')
+    refute ha.kindergarten_participation_correlates_with_household_income(for: 'academy 20')
+  end
+
+  def test_statewide_kinder_correlates_with_household_income
+    refute ha.kindergarten_participation_correlates_with_household_income(for: 'STATEWIDE')
+  end
+
+  def test_kinder_correlates_with_household_income_across_districts
+    assert ha.kindergarten_participation_correlates_with_household_income(:across => ['ACADEMY 20', 'YUMA SCHOOL DISTRICT 1', 'WILEY RE-13 JT', 'SPRINGFIELD RE-4'])
+  end
 
 
 end
