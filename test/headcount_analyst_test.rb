@@ -139,6 +139,7 @@ class HeadcountAnalystTest < Minitest::Test
  end
 
  def test_can_compare_multiple_districts
+   
    dr = DistrictRepository.new
    dr.load_data({
      :enrollment => {
@@ -178,7 +179,7 @@ class EconomicProfileAnalysisTest < Minitest::Test
   end
 
   def test_can_get_statewide_average_for_free_reduced_lunch
-    assert_equal 285186, ha.statewide_lunch_average
+    assert_equal 1575.0, ha.statewide_lunch_average
   end
 
   def test_can_get_statewide_average_for_children_in_poverty
@@ -195,7 +196,53 @@ class EconomicProfileAnalysisTest < Minitest::Test
   end
 
   def test_can_create_result_set_with_high_poverty_and_high_school_grade_matches
-    assert_instance_of ResultSet, ha.high_poverty_and_high_school_graduation
+    rs = ha.high_poverty_and_high_school_graduation
+    assert_instance_of ResultSet, rs
+    assert_equal 2, rs.matching_districts.count
+    assert_instance_of ResultEntry, rs.matching_districts.first
   end
+
+  def test_match_has_rate_data
+    rs = ha.high_poverty_and_high_school_graduation
+    assert_equal 2296, rs.matching_districts.first.free_and_reduced_price_lunch_rate
+    assert_equal 0.176, rs.matching_districts.first.children_in_poverty_rate
+    assert_equal 0.832, rs.matching_districts.first.high_school_graduation_rate
+    assert_instance_of ResultEntry, rs.statewide_average
+    assert_equal 1575, rs.statewide_average.free_and_reduced_price_lunch_rate
+    assert_equal 0.164, rs.statewide_average.children_in_poverty_rate
+    assert_equal 0.751,  rs.statewide_average.high_school_graduation_rate
+  end
+
+  def test_can_get_statewide_median_household_income_average
+    assert_equal 57408, ha.statewide_median_household_income
+  end
+
+  def test_can_get_district_median_house_income_average
+    district = dr.find_by_name("Adams county 14")
+    assert_equal 41305, ha.median_income(district)
+  end
+
+  def test_can_create_result_set_with_median_income_and_poverty
+    rs = ha.high_income_and_poverty
+    assert_instance_of ResultSet, rs
+    assert_equal 2, rs.matching_districts.count
+    assert_instance_of ResultEntry, rs.matching_districts.first
+  end
+
+  def test_income_poverty_match_has_rate_data
+    rs = ha.high_income_and_poverty
+    assert_equal 63265, rs.matching_districts.first.median_household_income
+    assert_equal 0.205, rs.matching_districts.first.children_in_poverty_rate
+    assert_instance_of ResultEntry, rs.statewide_average
+    assert_equal 57408.0, rs.statewide_average.median_household_income
+    assert_equal 0.164, rs.statewide_average.children_in_poverty_rate
+  end
+
+  def test_kinder_part_against_household_income
+    district = dr.find_by_name("Adams county 14")
+    assert_equal 1.855, ha.kindergarten_participation_against_household_income(district)
+  end
+
+
 
 end

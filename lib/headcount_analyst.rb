@@ -108,7 +108,8 @@ class HeadcountAnalyst
           set[:total]
         end.inject(:+)
     count = district.economic_profile.attributes[:free_or_reduced_price_lunch].values.count
-    sum/count
+    all = sum/count
+    truncate_float(all/dr.districts.length)
   end
 
   def statewide_children_in_poverty_average
@@ -125,6 +126,13 @@ class HeadcountAnalyst
     truncate_float(total/valid_districts)
   end
 
+  def statewide_median_household_income
+    district = dr.find_by_name("colorado")
+    sum = district.economic_profile.attributes[:median_household_income].values.inject(:+)
+    count = district.economic_profile.attributes[:median_household_income].values.count
+    truncate_float(sum/count)
+  end
+
   def statewide_hs_grad_average
     district = dr.find_by_name("colorado")
     sum = district.enrollment.attributes[:high_school_graduation].values.inject(:+)
@@ -134,7 +142,7 @@ class HeadcountAnalyst
 
   def children_in_poverty_average(district)
       sum = district.economic_profile.attributes[:children_in_poverty].values.inject(:+)
-      count = district.enrollment.attributes[:children_in_poverty].values.count
+      count = district.economic_profile.attributes[:children_in_poverty].values.count
       truncate_float(sum/count)
   end
 
@@ -152,10 +160,35 @@ class HeadcountAnalyst
     sum/count
   end
 
+  def median_income(district)
+    sum = district.economic_profile.attributes[:median_household_income].values.inject(:+)
+    count = district.economic_profile.attributes[:median_household_income].values.count
+    sum/count
+  end
+
+  def income_variation(district)
+    median_income(district)/statewide_median_household_income
+  end
+
+  def kinder_rate_variation(district, options = {:against => "Colorado"})
+   other_district = dr.find_by_name(options[:against])
+   variation = rate_calculator(district, :kindergarten)/rate_calculator(other_district, :kindergarten)
+   truncate_float(variation)
+  end
+
+  def kindergarten_participation_against_household_income(dist)
+    truncate_float(kinder_rate_variation(dist)/income_variation(dist))
+  end
+
   def statewide_lunch_poverty_grad
     {:free_and_reduced_price_lunch_rate => statewide_lunch_average,
       :children_in_poverty_rate => statewide_children_in_poverty_average,
       :high_school_graduation_rate => statewide_hs_grad_average}
+  end
+
+  def statewide_income_poverty
+    {:median_household_income => statewide_median_household_income,
+      :children_in_poverty_rate => statewide_children_in_poverty_average}
   end
 
   def includes_grad_lunch_poverty?(district)
@@ -165,22 +198,55 @@ class HeadcountAnalyst
     district.name != "COLORADO"
   end
 
+  def includes_income_and_poverty?(district)
+    district.economic_profile.attributes[:median_household_income] &&
+    district.economic_profile.attributes[:children_in_poverty] &&
+    district.name != "COLORADO"
+  end
+
+  def higher_than_statewide_income_poverty?(district)
+    median_income(district) > statewide_median_household_income &&
+    children_in_poverty_average(district) > statewide_children_in_poverty_average
+  end
+
   def higher_than_statewide_in_poverty_lunch_grad?(district)
     lunch_average(district) > statewide_lunch_average &&
     children_in_poverty_average(district) > statewide_children_in_poverty_average &&
     hs_grad_average(district) > statewide_hs_grad_average
   end
 
+  def lpg_new_result_entry(district)
+    {:free_and_reduced_price_lunch_rate => lunch_average(district),
+    :children_in_poverty_rate => children_in_poverty_average(district),
+    :high_school_graduation_rate => hs_grad_average(district)}
+  end
+
+  def pi_new_result_entry(district)
+    {:median_household_income => median_income(district),
+     :children_in_poverty_rate => children_in_poverty_average(district)}
+  end
 
   def high_poverty_and_high_school_graduation
     matching = []
     dr.districts.map do |district|
         if includes_grad_lunch_poverty?(district) &&
         higher_than_statewide_in_poverty_lunch_grad?(district)
-          matching << district
+          matching << ResultEntry.new(lpg_new_result_entry(district))
         end
     end
-    rs = ResultSet.new(matching_districts: matching, statewide_average: statewide_lunch_poverty_grad)
+    ResultSet.new(matching_districts: matching, statewide_average: ResultEntry.new(statewide_lunch_poverty_grad))
   end
+
+  def high_income_and_poverty
+    matching = []
+    dr.districts.map do |district|
+        if includes_income_and_poverty?(district) &&
+        higher_than_statewide_income_poverty?(district)
+          matching << ResultEntry.new(pi_new_result_entry(district))
+        end
+    end
+    ResultSet.new(matching_districts: matching, statewide_average: ResultEntry.new(statewide_income_poverty))
+  end
+
 
 end
