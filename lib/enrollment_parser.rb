@@ -3,8 +3,8 @@ require_relative 'helper'
 module EnrollmentParser
   include Helper
 
-  def parsed_enrollment_data(filepath)
-    CSV.foreach(filepath, headers: true, header_converters: :symbol).map do |row|
+  def parsed_enrollment_data(path)
+    CSV.foreach(path, headers: true, header_converters: :symbol).map do |row|
       { name: row[:location].upcase, row[:timeframe].to_i => row[:data].to_f}
     end
   end

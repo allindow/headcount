@@ -9,5 +9,5 @@ module Helper
       row[:name].upcase
     end
   end
-  
+
 end

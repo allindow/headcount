@@ -33,7 +33,7 @@ class HeadcountAnalystTest < Minitest::Test
     refute hca.dr.districts.empty?
   end
 
-  def test_that_rate_calculator_returns_average
+  def test_that_rate_calc_returns_average
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
@@ -42,7 +42,7 @@ class HeadcountAnalystTest < Minitest::Test
       })
       hca = HeadcountAnalyst.new(dr)
     correct_district = dr.find_by_name('Academy 20')
-    assert_equal 0.406, hca.rate_calculator(correct_district, :kindergarten)
+    assert_equal 0.406, hca.rate_calc(correct_district, :kindergarten)
   end
 
   def test_that_state_kindergarten_participation_rate_is_compared_to_state
@@ -175,7 +175,7 @@ class EconomicProfileAnalysisTest < Minitest::Test
   end
 
   def test_can_get_statewide_average_for_children_in_poverty
-    assert_equal 0.164, ha.statewide_children_in_poverty_average
+    assert_equal 0.164, ha.sw_children_in_poverty_average
   end
 
   def test_can_get_statewide_hs_grad_average

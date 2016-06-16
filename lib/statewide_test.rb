@@ -11,11 +11,13 @@ class StatewideTest
     end
 
     def parameter
-       {3 => :third_grade, 8 => :eighth_grade,
-                  :asian => :asian, :pacific_islander => :pacific_islander,
-                  :black => :black, :hispanic => :hispanic, :native_american => :native_american,
-                  :two_or_more => :two_or_more, :white => :white, :reading => :reading,
-                  :writing => :writing, :math => :math}
+      {3 => :third_grade, 8 => :eighth_grade,
+        :asian => :asian, :pacific_islander => :pacific_islander,
+        :black => :black, :hispanic => :hispanic,
+        :native_american => :native_american,
+        :two_or_more => :two_or_more, :white => :white, :reading => :reading,
+        :writing => :writing, :math => :math
+      }
     end
 
     def name
@@ -23,7 +25,8 @@ class StatewideTest
     end
 
     def valid_data(subject, category, year)
-      proficient_by_grade(category)[year] && attributes[parameter[category]] && proficient_by_grade(category)[year][subject]
+      proficient_by_grade(category)[year] && attributes[parameter[category]]\
+      && proficient_by_grade(category)[year][subject]
     end
 
     def proficient_by_grade(grade)
