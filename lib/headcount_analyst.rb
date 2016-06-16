@@ -101,4 +101,86 @@ class HeadcountAnalyst
      positive_correlation = all_correlations.count(true).to_f/all_correlations.count.to_f
     positive_correlation > 0.7
   end
+
+  def statewide_lunch_average
+    district = dr.find_by_name("colorado")
+    sum = district.economic_profile.attributes[:free_or_reduced_price_lunch].values.map do |set|
+          set[:total]
+        end.inject(:+)
+    count = district.economic_profile.attributes[:free_or_reduced_price_lunch].values.count
+    sum/count
+  end
+
+  def statewide_children_in_poverty_average
+    total = 0
+    valid_districts = 0
+    dr.districts.each do |district|
+      if district.economic_profile.attributes[:children_in_poverty]
+        total_percentages = district.economic_profile.attributes[:children_in_poverty].values.inject(:+)
+        total_years = district.economic_profile.attributes[:children_in_poverty].values.count
+        total += total_percentages/total_years
+        valid_districts += 1
+      end
+    end
+    truncate_float(total/valid_districts)
+  end
+
+  def statewide_hs_grad_average
+    district = dr.find_by_name("colorado")
+    sum = district.enrollment.attributes[:high_school_graduation].values.inject(:+)
+    count = district.enrollment.attributes[:high_school_graduation].values.count
+    truncate_float(sum/count)
+  end
+
+  def children_in_poverty_average(district)
+      sum = district.economic_profile.attributes[:children_in_poverty].values.inject(:+)
+      count = district.enrollment.attributes[:children_in_poverty].values.count
+      truncate_float(sum/count)
+  end
+
+  def hs_grad_average(district)
+    sum = district.enrollment.attributes[:high_school_graduation].values.inject(:+)
+    count = district.enrollment.attributes[:high_school_graduation].values.count
+    truncate_float(sum/count)
+  end
+
+  def lunch_average(district)
+    sum = district.economic_profile.attributes[:free_or_reduced_price_lunch].values.map do |set|
+          set[:total]
+        end.inject(:+)
+    count = district.economic_profile.attributes[:free_or_reduced_price_lunch].values.count
+    sum/count
+  end
+
+  def statewide_lunch_poverty_grad
+    {:free_and_reduced_price_lunch_rate => statewide_lunch_average,
+      :children_in_poverty_rate => statewide_children_in_poverty_average,
+      :high_school_graduation_rate => statewide_hs_grad_average}
+  end
+
+  def includes_grad_lunch_poverty?(district)
+    district.economic_profile.attributes[:free_or_reduced_price_lunch] &&
+    district.enrollment.attributes[:high_school_graduation] &&
+    district.economic_profile.attributes[:children_in_poverty] &&
+    district.name != "COLORADO"
+  end
+
+  def higher_than_statewide_in_poverty_lunch_grad?(district)
+    lunch_average(district) > statewide_lunch_average &&
+    children_in_poverty_average(district) > statewide_children_in_poverty_average &&
+    hs_grad_average(district) > statewide_hs_grad_average
+  end
+
+
+  def high_poverty_and_high_school_graduation
+    matching = []
+    dr.districts.map do |district|
+        if includes_grad_lunch_poverty?(district) &&
+        higher_than_statewide_in_poverty_lunch_grad?(district)
+          matching << district
+        end
+    end
+    rs = ResultSet.new(matching_districts: matching, statewide_average: statewide_lunch_poverty_grad)
+  end
+
 end
