@@ -19,4 +19,8 @@ class ResultEntry
     attributes[:high_school_graduation_rate]
   end
 
+  def median_household_income
+    attributes[:median_household_income]
+  end
+
 end
