@@ -166,6 +166,20 @@ class HeadcountAnalyst
     sum/count
   end
 
+  def income_variation(district)
+    median_income(district)/statewide_median_household_income
+  end
+
+  def kinder_rate_variation(district, options = {:against => "Colorado"})
+   other_district = dr.find_by_name(options[:against])
+   variation = rate_calculator(district, :kindergarten)/rate_calculator(other_district, :kindergarten)
+   truncate_float(variation)
+  end
+
+  def kindergarten_participation_against_household_income(dist)
+    truncate_float(kinder_rate_variation(dist)/income_variation(dist))
+  end
+
   def statewide_lunch_poverty_grad
     {:free_and_reduced_price_lunch_rate => statewide_lunch_average,
       :children_in_poverty_rate => statewide_children_in_poverty_average,
@@ -233,4 +247,6 @@ class HeadcountAnalyst
     end
     ResultSet.new(matching_districts: matching, statewide_average: ResultEntry.new(statewide_income_poverty))
   end
+
+
 end

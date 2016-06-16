@@ -139,6 +139,7 @@ class HeadcountAnalystTest < Minitest::Test
  end
 
  def test_can_compare_multiple_districts
+   
    dr = DistrictRepository.new
    dr.load_data({
      :enrollment => {
@@ -236,5 +237,12 @@ class EconomicProfileAnalysisTest < Minitest::Test
     assert_equal 57408.0, rs.statewide_average.median_household_income
     assert_equal 0.164, rs.statewide_average.children_in_poverty_rate
   end
+
+  def test_kinder_part_against_household_income
+    district = dr.find_by_name("Adams county 14")
+    assert_equal 1.855, ha.kindergarten_participation_against_household_income(district)
+  end
+
+
 
 end
